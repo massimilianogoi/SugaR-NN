@@ -60,7 +60,6 @@ Implemented by default
 
 - [https://github.com/Kellykinyama12/Stockfish] (montecarlo by Kelly Kinyama) only when true. This creates three files for machine learning purposes:
 SugaR-NN implements a persistent learning algorithm by Kelly kyniama and Andrea Manzo.
-https://github.com/Kellykinyama12/Stockfish
 Reads and creates the following file types:
 
 pawn.bin with the learning when there are max a total of 2 pieces for white and black
