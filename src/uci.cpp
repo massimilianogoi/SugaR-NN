@@ -58,35 +58,49 @@ namespace {
     Move m;
     string token, fen;
     string newFen; //from Kelly
+	bool persistedSelfLearning=Options["NN Persisted Self-Learning"]; //mcts
     is >> token;
 
     if (token == "startpos")
     {
-      //from Kelly begin
-	  startPosition = true;
+      //kellykynyama mcts begin
+      if(persistedSelfLearning)
+      {
+	startPosition = true;
+      }
+      //kellykynyama end
       fen = StartFEN;
-	  newFen = fen;
+      //kellykynyama mcts begin
+      if(persistedSelfLearning)
+      {
+	 	newFen = fen;
+      }
+      //kellykynyama mcts end
       is >> token; // Consume "moves" token if any
-      //from Kelly end
     }
     else if (token == "fen")
     {
-    	//from Kelly begin
+      //kellykynyama mcts begin
+      if(persistedSelfLearning)
+      {
 		startPosition = false;
 		newFen = token;
-      	while (is >> token && token != "moves")
+      }
+      //kellykynyama mcts end
+      while (is >> token && token != "moves")
 	      fen += token + " ";
-	    //from Kelly end
     }
     else
         return;
 
     states = StateListPtr(new std::deque<StateInfo>(1)); // Drop old and create a new one
     pos.set(fen, Options["UCI_Chess960"], &states->back(), Threads.main());
-    //from Kelly begin
+    //kellykynyama mcts begin
     int movesPlayedPosition = 0;
     int opMoves = 0;
-    if (StartFEN != newFen)
+    if(persistedSelfLearning)
+    {
+      if (StartFEN != newFen)
       {
 	      startPosition = false;
 	      fileKey = pos.key();
@@ -96,13 +110,17 @@ namespace {
 	      startPosition = true;
 	      fileKey = 0;
       }
-    //from Kelly end
+    }
+    //kellykynyama mcts end
 
     // Parse move list (if any)
     while (is >> token && (m = UCI::to_move(pos, token)) != MOVE_NONE)
     {
         states->emplace_back();
-	  //from Kelly begin	
+
+	//kellykynyama mcts begin
+        if(persistedSelfLearning)
+        {
 	  if (!fileKey)
 	  {
 	    if ((movesPlayedPosition == 2 || movesPlayedPosition == 4 || movesPlayedPosition == 6 || movesPlayedPosition == 8 || movesPlayedPosition == 10 || movesPlayedPosition == 12 || movesPlayedPosition == 14 || movesPlayedPosition == 16) && newFen == StartFEN)
@@ -118,10 +136,17 @@ namespace {
 		    setStartPoint(startPosition);
 	    }
 	  }
+        }
+	//kellykyniama mcts end
 
         pos.do_move(m, states->back());
-        movesPlayedPosition++;
-    }//from Kelly end
+        //kellykyniama mcts begin
+        if(persistedSelfLearning)
+        {
+            movesPlayedPosition++;
+        }
+        //kellykyniama mcts end
+    }
   }
 
 
