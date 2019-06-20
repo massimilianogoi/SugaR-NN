@@ -55,8 +55,9 @@ we must pay attention to the compactness and the other way around.
 Experimental, MonteCarloTreeSearch, if activated, the engine's behaviour is similar to AlphaZero concepts.
 Idea are implemented, integrated on SugaR:
 	
-### NN MCTS Self-Learning
-Implemented by default
+### NN Persisted Self-Learning
+_Boolean, Default: False_
+
 
 - [https://github.com/Kellykinyama12/Stockfish] (montecarlo by Kelly Kinyama) only when true. This creates three files for machine learning purposes:
 SugaR-NN implements a persistent learning algorithm by Kelly kyniama and Andrea Manzo.
