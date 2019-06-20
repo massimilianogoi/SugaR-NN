@@ -94,7 +94,7 @@ void init(OptionsMap& o) {
   o["Perceptron Algorithm"]  << Option(false);
   o["Use MCTS Score"]        << Option(false);
   o["Less Pruning Mode"]     << Option(0, 0,  9);
-  o["NN Persisted Self-Learning"]  << Option(false);
+  o["NN Persisted Self-Learning"]  << Option(true);
   o["SyzygyPath"]            << Option("<empty>", on_tb_path);
   o["SyzygyProbeDepth"]      << Option(1, 1, 100);
   o["Syzygy50MoveRule"]      << Option(true);
