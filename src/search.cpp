@@ -1252,9 +1252,10 @@ moves_loop: // When in check, search starts from here
           // Multi-cut pruning
           // Our ttMove is assumed to fail high, and now we failed high also on a reduced
           // search without the ttMove. So we assume this expected Cut-node is not singular,
-          // that is multiple moves fail high, and we can prune the whole subtree by returning
-          // the hard beta bound.
-          else if (cutNode && singularBeta > beta)
+          // that multiple moves fail high, and we can prune the whole subtree by returning
+          // a soft bound.
+          else if (   eval >= beta
+                   && singularBeta >= beta)
             {
               if(mctsSearch)
         	{
