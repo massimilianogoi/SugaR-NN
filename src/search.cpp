@@ -212,7 +212,6 @@ void MainThread::search() {
   TT.new_search();
   else
   TT.infinite_search();
-  TT.infinite_search();
   // Read search options
   Options_Dynamic_Strategy = Options["Dynamic Strategy"];
   percSearch=Options["Perceptron Algorithm"];
