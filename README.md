@@ -63,7 +63,7 @@ _Boolean, Default: False_
 SugaR-NN implements a persistent learning algorithm by Kelly kyniama and Andrea Manzo.
 Reads and creates the following file types:
 
-pawn.bin with the learning when there are max a total of 2 pieces for white and black
+pawngame.bin with the learning when there are max a total of 2 pieces for white and black
 experience.bin with the learning for
 opening variation of max 16 moves (8 half-moves) and a total of at least 7 pieces (no pawns) for white and black
 positions with max 6 pieces (no pawns) for white and black
