@@ -38,7 +38,6 @@
 #include "uci.h"
 #include "syzygy/tbprobe.h"
 
-bool Options_Dynamic_Strategy;
 int lessPruningMode;//from Sugar
 //kelly begin
 bool useExp = true;
@@ -213,7 +212,6 @@ void MainThread::search() {
   else
   TT.infinite_search();
   // Read search options
-  Options_Dynamic_Strategy = Options["Dynamic Strategy"];
   percSearch=Options["Perceptron Algorithm"];
   mctsSearch=Options["Use MCTS Score"];
   persistedSelfLearning=Options["NN Persisted Self-Learning"];

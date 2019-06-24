@@ -30,8 +30,6 @@
 #include "pawns.h"
 #include "thread.h"
 
-extern bool Options_Dynamic_Strategy;
-
 //from Corchess
 extern int lessPruningMode;
 //end from Corchess
@@ -825,46 +823,14 @@ namespace {
             + pieces<WHITE, ROOK  >() - pieces<BLACK, ROOK  >()
             + pieces<WHITE, QUEEN >() - pieces<BLACK, QUEEN >();
 
-	Value v_Dynamic_test = v;
-	
-	constexpr double DYNAMIC_ADVANTAGE_PAWNS_COUNT = 1.0;
-	constexpr Value DYNAMIC_ADVANTAGE_VALUE = Value(int(DYNAMIC_ADVANTAGE_PAWNS_COUNT * double(PawnValueMg + PawnValueEg) / 2.0));
-	constexpr double Dynamic_Scale_Factor_Default = 1.0;
+    score += mobility[WHITE] - mobility[BLACK];
 
-	double king_Dynamic_scale = Dynamic_Scale_Factor_Default;
-	double passed_Dynamic_scale = Dynamic_Scale_Factor_Default;
-												 
-												  
+    score +=  king<   WHITE>() - king<   BLACK>()
+            + threats<WHITE>() - threats<BLACK>()
+            + passed< WHITE>() - passed< BLACK>()
+            + space<  WHITE>() - space<  BLACK>();
 
-	if (Options_Dynamic_Strategy)
-	{
-		{
-			constexpr double Dynamic_Winning_Scale_Factor_Default = 0.05;
-
-			constexpr double Alpha = 0.5;
-			const double Beta = abs(Dynamic_Winning_Scale_Factor_Default * 2 / (MidgameLimit + EndgameLimit));
-
-			const double Dynamic_Scale_Factor_Bonus = (-abs(v_Dynamic_test / DYNAMIC_ADVANTAGE_VALUE) + Alpha);
-
-			if (abs(v_Dynamic_test) >= double(PawnValueMg + PawnValueEg) / 2.0)
-			{
-				king_Dynamic_scale = Dynamic_Scale_Factor_Default - Dynamic_Scale_Factor_Bonus * Beta;
-			}
-			else
-			{
-				passed_Dynamic_scale = Dynamic_Scale_Factor_Default + Dynamic_Scale_Factor_Bonus * Beta;
-			}
-		}
-	}
-	score += mobility[WHITE] - mobility[BLACK];
-	Score default_king = king<   WHITE>() - king<   BLACK>();
-	Score score_king = Score(int(double(default_king) * king_Dynamic_scale));
-	score += score_king;
-	score += threats<WHITE>() - threats<BLACK>();
-	Score default_passed = passed< WHITE>() - passed< BLACK>();
-	Score score_passed = Score(int(double(default_passed) * passed_Dynamic_scale));
-	score += score_passed;
-	score += initiative(eg_value(score));
+    score += initiative(eg_value(score));
 
     // Interpolate between a middlegame and a (scaled by 'sf') endgame score
     ScaleFactor sf = scale_factor(eg_value(score));
