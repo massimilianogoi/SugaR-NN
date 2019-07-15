@@ -757,7 +757,7 @@ namespace {
     Depth extension, newDepth;
     //from Kelly begin
     Value bestValue, value, ttValue, eval=VALUE_NONE, maxValue, expTTValue=VALUE_NONE;
-    bool ttHit, ttPv, inCheck, givesCheck, improving, expTTHit=false;
+    bool ttHit, ttPv, inCheck, givesCheck, improving, doLMR, expTTHit=false;
     //from Kelly End
     bool captureOrPromotion, doFullDepthSearch, moveCountPruning, ttCapture;
     Piece movedPiece;
@@ -1486,14 +1486,25 @@ moves_loop: // When in check, search starts from here
 		  if(percSearch)
 			thisThread->train(features,  0.5e-2, prediction, result);
 
-          doFullDepthSearch = (value > alpha && d != newDepth);
+          doFullDepthSearch = (value > alpha && d != newDepth), doLMR = true;
       }
       else
-          doFullDepthSearch = !PvNode || moveCount > 1;
+          doFullDepthSearch = !PvNode || moveCount > 1, doLMR = false;
 
       // Step 17. Full depth search when LMR is skipped or fails high
       if (doFullDepthSearch)
+      {
           value = -search<NonPV>(pos, ss+1, -(alpha+1), -alpha, newDepth, !cutNode);
+
+          if (doLMR && !captureOrPromotion)
+          {
+              int bonus = stat_bonus(newDepth) / 2;
+              if (value <= alpha)
+                  bonus = -bonus;
+
+              update_continuation_histories(ss, movedPiece, to_sq(move), bonus);
+          }
+      }
 
       // For PV nodes only, do a full PV search on the first move or after a fail
       // high (in the latter case search only if value < beta), otherwise let the
