@@ -90,6 +90,8 @@ void init(OptionsMap& o) {
   o["LoadHashfromFile"]      << Option(LoadHashfromFile);
   o["LoadEpdToHash"]         << Option(LoadEpdToHash);
   o["UCI_AnalyseMode"]       << Option(false);
+  o["UCI_LimitStrength"]     << Option(false);
+  o["UCI_Elo"]               << Option(1350, 1350, 2850);
   o["Perceptron Algorithm"]  << Option(false);
   o["Use MCTS Score"]        << Option(false);
   o["Less Pruning Mode"]     << Option(0, 0,  9);
