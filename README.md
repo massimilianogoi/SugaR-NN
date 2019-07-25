@@ -28,11 +28,14 @@ This distribution of SugaR consists of the following files:
 
 ## Uci options
 
+#### Skill Level
 Lower the Skill Level in order to make Stockfish play weaker (see also UCI_LimitStrength). Internally, MultiPV is enabled, and with a certain probability depending on the Skill Level a weaker move will be played.
 										
 
+* #### UCI_LimitStrength
 Enable weaker play aiming for an Elo rating as set by UCI_Elo. This option overrides Skill Level.
 
+* #### UCI_Elo
 If enabled by UCI_LimitStrength, aim for an engine strength of the given Elo. This Elo rating has been calibrated at a time control of 60s+0.6s and anchored to CCRL 40/4.
 ## Less Pruning Mode
 Default: 0, Min: 0, Max:9

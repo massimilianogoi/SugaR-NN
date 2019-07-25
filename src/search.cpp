@@ -1371,7 +1371,7 @@ moves_loop: // When in check, search starts from here
 		//from Kelly end
 			  
               // Reduced depth of the next LMR search
-              int lmrDepth = std::max(newDepth - reduction(improving, depth, moveCount), DEPTH_ZERO);
+              int lmrDepth = lessPruningMode ? std::max(newDepth - reduction(improving, depth, moveCount), DEPTH_ZERO) / ONE_PLY : std::max(newDepth - reduction(improving, depth, moveCount), DEPTH_ZERO);
               lmrDepth /= ONE_PLY;
 
               // Countermoves based pruning (~20 Elo)
@@ -1420,7 +1420,7 @@ moves_loop: // When in check, search starts from here
               || moveCountPruning
               || ss->staticEval + PieceValue[EG][pos.captured_piece()] <= alpha))
       {
-          Depth r = reduction(improving, depth, moveCount);
+          Depth r = lessPruningMode ? reduction(improving, depth, moveCount) : reduction(improving, depth, moveCount);
 
           // Reduction if other threads are searching this position.
           if (th.marked())
