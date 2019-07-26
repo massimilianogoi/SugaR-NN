@@ -261,7 +261,7 @@ void Bitboards::init() {
   for (Rank r = RANK_1; r < RANK_8; ++r)
       ForwardRanksBB[WHITE][r] = ~(ForwardRanksBB[BLACK][r + 1] = ForwardRanksBB[BLACK][r] | RankBB[r]);
 
-  for (Color c = WHITE; c <= BLACK; ++c)
+  for (Color c : { WHITE, BLACK })
       for (Square s = SQ_A1; s <= SQ_H8; ++s)
       {
           ForwardFileBB [c][s] = ForwardRanksBB[c][rank_of(s)] & FileBB[file_of(s)];
