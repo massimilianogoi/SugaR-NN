@@ -115,6 +115,8 @@ namespace {
     Move best = MOVE_NONE;
   };
 
+  bool doNull;
+  
   // Breadcrumbs are used to mark nodes as being searched by a given thread.
   struct Breadcrumb {
     std::atomic<Thread*> thread;
@@ -255,6 +257,7 @@ void MainThread::search() {
   else
   TT.infinite_search();
   // Read search options
+  doNull = Options["NullMove"];
   percSearch=Options["Perceptron Algorithm"];
   mctsSearch=Options["Use MCTS Score"];
   persistedSelfLearning=Options["NN Persisted Self-Learning"];
@@ -1085,7 +1088,8 @@ namespace {
 	return eval;
       }
     // Step 9. Null move search with verification search (~40 Elo)
-    if (   !PvNode
+    if (    doNull
+        && !PvNode
         && (ss-1)->currentMove != MOVE_NULL
         && (ss-1)->statScore < 23200
         &&  eval >= beta
