@@ -78,7 +78,8 @@ class TranspositionTable {
   static_assert(CacheLineSize % sizeof(Cluster) == 0, "Cluster size incorrect");
 
 public:
- ~TranspositionTable() { free(mem); }
+  TranspositionTable() { mbSize_last_used = 0;  mbSize_last_used = 0; }
+ ~TranspositionTable() {}
   void new_search() { generation8 += 8; } // Lower 3 bits are used by PV flag and Bound
   void infinite_search() { generation8 = 8; }
   uint8_t generation() const { return generation8; }
@@ -99,7 +100,9 @@ public:
 
 private:
   friend struct TTEntry;
-
+  
+  int64_t  mbSize_last_used;  
+  bool large_pages_used;
   size_t clusterCount;
   Cluster* table;
   void* mem;

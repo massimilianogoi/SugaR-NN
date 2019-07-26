@@ -92,6 +92,7 @@ void init(OptionsMap& o) {
   o["UCI_AnalyseMode"]       << Option(false);
   o["UCI_LimitStrength"]     << Option(false);
   o["UCI_Elo"]               << Option(1350, 1350, 2850);
+  o["Large Pages"]           << Option(true, on_large_pages);
   o["Perceptron Algorithm"]  << Option(false);
   o["Use MCTS Score"]        << Option(false);
   o["Less Pruning Mode"]     << Option(0, 0,  9);
