@@ -151,7 +151,6 @@ inline bool opposite_colors(Square s1, Square s2) {
   return bool(DarkSquares & s1) != bool(DarkSquares & s2);
 }
 
-
 /// rank_bb() and file_bb() return a bitboard representing all the squares on
 /// the given file or rank.
 
@@ -247,7 +246,7 @@ inline Bitboard forward_file_bb(Color c, Square s) {
 ///      PawnAttackSpan[c][s] = forward_ranks_bb(c, s) & adjacent_files_bb(file_of(s));
 
 inline Bitboard pawn_attack_span(Color c, Square s) {
-  return forward_ranks_bb(c, s) & adjacent_files_bb(s);
+  return PawnAttackSpan[c][s];
 }
 
 
@@ -256,7 +255,7 @@ inline Bitboard pawn_attack_span(Color c, Square s) {
 ///      PassedPawnMask[c][s] = pawn_attack_span(c, s) | forward_file_bb(c, s)
 
 inline Bitboard passed_pawn_span(Color c, Square s) {
-  return forward_ranks_bb(c, s) & (adjacent_files_bb(s) | file_bb(s));
+  return PassedPawnMask[c][s];
 }
 
 
@@ -404,7 +403,6 @@ inline Square pop_lsb(Bitboard* b) {
 
 
 /// frontmost_sq() returns the most advanced square for the given color
-
 inline Square frontmost_sq(Color c, Bitboard b) { return c == WHITE ? msb(b) : lsb(b); }
 
 #endif // #ifndef BITBOARD_H_INCLUDED

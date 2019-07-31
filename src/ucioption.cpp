@@ -42,7 +42,7 @@ namespace UCI {
 /// 'On change' actions, triggered by an option's value change
 void on_clear_hash(const Option&) { Search::clear(); }
 void on_hash_size(const Option& o) { TT.resize(o);} //from Kelly
-void on_large_pages(const Option& o) { TT.resize(o); }  // warning is ok, will be removed
+void on_large_pages(const Option& o) { TT.resize(o); }
 void on_logger(const Option& o) { start_logger(o); }
 void on_threads(const Option& o) { Threads.set(o); }
 void on_tb_path(const Option& o) { Tablebases::init(o); }
@@ -91,12 +91,12 @@ void init(OptionsMap& o) {
   o["LoadHashfromFile"]      << Option(LoadHashfromFile);
   o["LoadEpdToHash"]         << Option(LoadEpdToHash);
   o["UCI_AnalyseMode"]       << Option(false);
+  o["ICCF Analyzes"]         << Option(0, 0,  8);
   o["UCI_LimitStrength"]     << Option(false);
   o["UCI_Elo"]               << Option(1350, 1350, 2850);
   o["Large Pages"]           << Option(true, on_large_pages);
   o["Perceptron Algorithm"]  << Option(false);
   o["Use MCTS Score"]        << Option(false);
-  o["Less Pruning Mode"]     << Option(0, 0,  9);
   o["NullMove"]              << Option(true);
   o["NN Persisted Self-Learning"]  << Option(true);
   o["SyzygyPath"]            << Option("<empty>", on_tb_path);

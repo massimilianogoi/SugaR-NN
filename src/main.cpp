@@ -56,7 +56,6 @@ int main(int argc, char* argv[]) {
   Bitbases::init();
   Endgames::init();
   Search::init();
-
   Threads.set(Options["Threads"]);
   polybook.init(Options["BookFile"]);
   polybook2.init(Options["BookFile2"]);

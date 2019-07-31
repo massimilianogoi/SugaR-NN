@@ -23,9 +23,9 @@
 
 ### Executable name
 ifeq ($(COMP),mingw)
-EXE = sugar.exe
+EXE = stockfish.exe
 else
-EXE = sugar
+EXE = stockfish
 endif
 
 ### Installation dir definitions
@@ -365,7 +365,7 @@ endif
 
 help:
 	@echo ""
-	@echo "To compile sugar, type: "
+	@echo "To compile stockfish, type: "
 	@echo ""
 	@echo "make target ARCH=arch [COMP=compiler] [COMPCXX=cxx]"
 	@echo ""

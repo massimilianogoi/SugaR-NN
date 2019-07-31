@@ -37,28 +37,31 @@ Enable weaker play aiming for an Elo rating as set by UCI_Elo. This option overr
 
 * #### UCI_Elo
 If enabled by UCI_LimitStrength, aim for an engine strength of the given Elo. This Elo rating has been calibrated at a time control of 60s+0.6s and anchored to CCRL 40/4.
-## Less Pruning Mode
-Default: 0, Min: 0, Max:9
+
+## ICCF Analyzes
+Default: 0, Min: 0, Max:8
 
 0, no MultiPV.
-1, no MultiPV and corchess mode (for game play at very long time control or analysis purpose)
-2-9 MultiPV and corchess mode : higher depths and longer time to reach them. So, fewer tactical shots missed, but loss of some ELO, increasingly until 9,
+
+For analysis (purpose)
+* Value 1 corresponds to multiPV = 2
+* Value 2 to multiPV = 4
+* Value 3 to multiPV = 8
+* Value 4 to multiPV =16
+* Value 5 to multiPV = 32
+* Value 6 to multiPV = 64
+* Value 7 to multiPV = 128
+* Value 8 to multiPV = 256
+
+1-8 MultiPV: higher depths and longer time to reach them. So, fewer tactical shots missed, but loss of some ELO, increasingly until 8,
 corresponding to multiPV = 256.
-N.B. Corchess mode [https://github.com/IIvec/Stockfish/tree/corchess/]
+
 
 Recommended values: from 2 to 5 ( > 5 too wide search width)
 
 ## SugaR-NN can use two parallel books
 original code by Thomas Zipproth:
 https://zipproth.de/Brainfish/brainfish/
-
-## Dynamic Strategy 
-_Boolean, Default: False_
-
-To be used as additional support in the analysis of particularly complex positions.
-With the increase of the score, that is how much the motor is in advantage or fundamentally closer to the checkmate.
-Or In all favorable pressing situations; The advanced Pawns are penalized and the King gains more importance because
-we must pay attention to the compactness and the other way around.
 
 ### NN section (Experimental Neural Networks inspired technics)
 Experimental, MonteCarloTreeSearch, if activated, the engine's behaviour is similar to AlphaZero concepts.

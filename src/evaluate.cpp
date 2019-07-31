@@ -30,9 +30,6 @@
 #include "pawns.h"
 #include "thread.h"
 
-//from Corchess
-extern int lessPruningMode;
-//end from Corchess
 namespace Trace {
 
   enum Tracing { NO_TRACE, TRACE };
@@ -796,15 +793,11 @@ namespace {
     pe = Pawns::probe(pos);
     score += pe->pawn_score(WHITE) - pe->pawn_score(BLACK);
 
-    //from Corchess
-    Value v = VALUE_ZERO;
-    if(!lessPruningMode){
-      // Early exit if score is high
-      v = (mg_value(score) + eg_value(score)) / 2;
+    // Early exit if score is high
+    Value v = (mg_value(score) + eg_value(score)) / 2;
     if (abs(v) > LazyThreshold + pos.non_pawn_material() / 64)
-	 return pos.side_to_move() == WHITE ? v : -v;
-    }
-    //end from Corchess
+       return pos.side_to_move() == WHITE ? v : -v;
+
     // Main evaluation begins here
 
     initialize<WHITE>();
