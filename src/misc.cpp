@@ -138,7 +138,8 @@ const string engine_info(bool to_uci) {
   ss << (Is64Bit ? " 64" : "")
      << (HasPext ? " BMI2" : (HasPopCnt ? " POPCNT" : ""))
      << (to_uci  ? "\nid author ": " by ")
-     << "Stockfish Team, Marco Zerbinati";
+     << "Stockfish Team, Marco Zerbinati"
+     << "\n\nRe-edited by Massimiliano Goi\n\nhttps://chess.massimilianogoi.com";
 
   return ss.str();
 }

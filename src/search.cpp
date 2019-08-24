@@ -368,7 +368,7 @@ void MainThread::search() {
  if(persistedSelfLearning){
 	  if ((((movesPlayed <= 300) || (piecesCnt <= 6)) && (bestThread->completedDepth > 4 * ONE_PLY)))
 	  {
-	    std::ofstream general("experience.bin", std::ofstream::app | std::ofstream::binary);
+	    std::ofstream general("SugaR-NN Files/experience.bin", std::ofstream::app | std::ofstream::binary);
 	    ExpEntry tempExpEntry;
 	    tempExpEntry.depth = bestThread->completedDepth;
 	    tempExpEntry.hashKey = rootPos.key();
@@ -387,7 +387,7 @@ void MainThread::search() {
 	
 		std::ostringstream ss;
 		ss << openingVariationMovesKeys[openingVariationMoveIndex];
-		openingFileName = ss.str() + ".bin";
+		openingFileName = "SugaR-NN Files/" + ss.str() + ".bin";
 		openingFileNameArray = new char[openingFileName.length() + 1];
 		std::strcpy(openingFileNameArray, openingFileName.c_str());
 		std::ofstream myFile(openingFileNameArray, std::ofstream::app | std::ofstream::binary);
@@ -397,7 +397,7 @@ void MainThread::search() {
 	    }
 	    if (piecesCnt <= 2)
 	    {
-		    std::ofstream pawngame("pawngame.bin", std::ofstream::app | std::ofstream::binary);
+		    std::ofstream pawngame("SugaR-NN Files/pawngame.bin", std::ofstream::app | std::ofstream::binary);
 		    pawngame.write((char*)&tempExpEntry, sizeof(tempExpEntry));
 		    pawngame.close();
 	    }

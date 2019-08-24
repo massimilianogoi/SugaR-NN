@@ -23,9 +23,9 @@
 
 ### Executable name
 ifeq ($(COMP),mingw)
-EXE = stockfish.exe
+EXE = sugar.exe
 else
-EXE = stockfish
+EXE = sugar
 endif
 
 ### Installation dir definitions

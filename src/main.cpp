@@ -19,6 +19,10 @@
 */
 
 #include <iostream>
+#include <dir.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
 
 #include "bitboard.h"
 #include "position.h"
@@ -36,33 +40,37 @@ namespace PSQT {
 
 int main(int argc, char* argv[]) {
 
-  std::cout << engine_info() << std::endl;
+	std::cout << engine_info() << std::endl;
 
-  UCI::init(Options);
-  if(Options["NN Persisted Self-Learning"])
-  {
-	  //from Kelly begin
-	  expResize("experience");
-	  loadLearningFiles("experience");
-	  expResize("pawngame");
-	  loadLearningFiles("pawngame");
-	  mctsHT.clear();
-	  expResize("experience");
-	  //from Kelly end
-  }  
-  PSQT::init();
-  Bitboards::init();
-  Position::init();
-  Bitbases::init();
-  Endgames::init();
-  Search::init();
-  Threads.set(Options["Threads"]);
-  polybook.init(Options["BookFile"]);
-  polybook2.init(Options["BookFile2"]);
-  Search::clear(); // After threads are up
+	char const *dirname = "SugaR-NN Files"; 
 
-  UCI::loop(argc, argv);
+	mkdir(dirname); 
 
-  Threads.set(0);
-  return 0;
+	UCI::init(Options);
+	if(Options["NN Persisted Self-Learning"])
+	{
+	    //from Kelly begin
+	    expResize("SugaR-NN Files/experience");
+	    loadLearningFiles("SugaR-NN Files/experience");
+	    expResize("SugaR-NN Files/pawngame");
+	    loadLearningFiles("SugaR-NN Files/pawngame");
+	    mctsHT.clear();
+	    expResize("SugaR-NN Files/experience");
+	    //from Kelly end
+	}  
+	PSQT::init();
+	Bitboards::init();
+	Position::init();
+	Bitbases::init();
+	Endgames::init();
+	Search::init();
+	Threads.set(Options["Threads"]);
+	polybook.init(Options["BookFile"]);
+	polybook2.init(Options["BookFile2"]);
+	Search::clear(); // After threads are up
+
+	UCI::loop(argc, argv);
+
+	Threads.set(0);
+	return 0;
 }
